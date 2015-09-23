@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>io.github.rampantlions</groupId>
+	<artifactId>maven</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>Maven</name>
+	<description><![CDATA[ICase Generation tools.]]></description>
+	<url>${git.server.protocol}://${git.server}/${git.user}/${project.artifactId}/</url>
+	<inceptionYear>2015</inceptionYear>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License, Version 2, June 1991 (GPLv2)</name>
+			<url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<properties>
+		<git.server.protocol>github.com</git.server.protocol>
+		<git.server>github.com</git.server>
+		<git.user>RampantLions</git.user>
+		<git.ioserver.protocol>http</git.ioserver.protocol>
+		<git.ioserver>${git.ioserver.protocol}://rampantlions.github.io/</git.ioserver>
+				
+		<jdk.version>1.7</jdk.version>
+		<jdk.sourceVersion>1.7</jdk.sourceVersion>
+		<jdk.targetVersion>1.7</jdk.targetVersion>
+		<jdk.complianceVersion>1.7</jdk.complianceVersion>
+
+		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>ISO-8859-1</project.reporting.outputEncoding>
+	</properties>
+	
+	<scm>
+		<connection>scm:git:git@${git.server}:${git.user}/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:git@${git.server}:${git.user}/${project.artifactId}.git</developerConnection>
+		<url>${project.url}</url>
+	</scm>
+	
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>${project.url}issues/</url>
+	</issueManagement>
+	
+	<distributionManagement>
+		<repository>
+			<id>repo</id>
+			<url>${git.ioserver}${project.artifactId}/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshot-repo</id>
+			<url>${git.ioserver}${project.artifactId}/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<build>
+		<extensions>
+			<!-- Enabling the use of Wagon file -->
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-file</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions> 
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>wagon-maven-plugin</artifactId>
+			<version>1.0-beta-3</version>
+			<executions>
+				<execution>
+					<id>upload-jar-to-folder</id>
+					<phase>deploy</phase>
+					<goals>
+						<goal>upload</goal>
+					</goals>
+				</execution>
+			</executions>
+			<configuration>
+				<fromDir>${project.build.directory}</fromDir>
+				<includes>*</includes>
+				<url>${basedir}</url>
+				<toDir>repository</toDir>
+			</configuration>
+		</plugin>      
+	</build>
+	
+</project>
