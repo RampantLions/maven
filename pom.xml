@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>${github.ioserver.pkg}.${github.ioserver.userOrOrg}</groupId>
@@ -20,6 +21,11 @@
 	</licenses>
 
 	<properties>
+		<maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
+		<inher.relative.ghnexus>/..</inher.relative.ghnexus>
+		<ghnexus.artifactId>${artifactId}</ghnexus.artifactId>
+		<ghnexus.dir>file://${project.basedir}${inher.relative.ghnexus}/MavenNexus/</ghnexus.dir>
+
 		<github.user>RampantLions</github.user>
 		<github.server>github.com</github.server>
 		<github.ioserver.userOrOrg>rampantlions</github.ioserver.userOrOrg>
@@ -83,14 +89,13 @@
 		<repository>
 			<id>repo</id>
 			<!-- <url>${github.ioserver}${project.artifactId}/releases</url> -->
-			<url>file://${project.basedir}/../MavenNexus/releases</url>
+			<url>${ghnexus.dir}releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshot-repo</id>
 			<!-- <url>${github.ioserver}${project.artifactId}/snapshots</url> -->
-			<url>file://${project.basedir}/../MavenNexus/snapshots</url>
+			<url>${ghnexus.dir}snapshots</url>
 		</snapshotRepository>
-
 		<site>
 			<id>${project.artifactId}.site</id>
 			<name>${project.name} Website</name>
@@ -111,29 +116,84 @@
 	<repositories>
 		<repository>
 			<id>repo</id>
-			<name>${github.user} GitHub ${project.artifactId}</name>
-			<url>${github.ioserver.url}${project.artifactId}/releases</url>
+			<name>${github.user} GitHub ${ghnexus.artifactId}</name>
+			<url>${github.ioserver.url}${ghnexus.artifactId}/releases</url>
 		</repository>
 		<repository>
 			<id>snapshot-repo</id>
-			<name>${github.user} GitHub ${project.artifactId} Snapshots</name>
-			<url>${github.ioserver.url}${project.artifactId}/releases</url>
+			<name>${github.user} GitHub ${ghnexus.artifactId} Snapshots</name>
+			<url>${github.ioserver.url}${ghnexus.artifactId}/releases</url>
+		</repository>
+		<repository>
+			<id>sonatype</id>
+			<url>http://oss.sonatype.org/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>maven-central</id>
+			<url>http://repo1.maven.org/maven/</url>
 		</repository>
 	</repositories>
 
 	<!-- mvn clean deploy -->
+	<!-- dependencyManagement> <dependencies> <dependency> <groupId>org.springframework</groupId> 
+		<artifactId>spring-framework-bom</artifactId> <version>4.0.0.RC2</version> 
+		<type>pom</type> <scope>import</scope> </dependency> </dependencies> </dependencyManagement -->
 
 	<build>
-		<extensions>
-			<!-- Enabling the use of Wagon file -->
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-file</artifactId>
-				<version>1.0-beta-6</version>
-			</extension>
-		</extensions>
+		<!-- <extensions> -->
+		<!-- <extension> -->
+		<!-- <groupId>org.apache.maven.wagon</groupId> -->
+		<!-- <artifactId>wagon-file</artifactId> -->
+		<!-- <version>1.0-beta-6</version> -->
+		<!-- </extension> -->
+		<!-- </extensions> -->
+		<!-- <plugin> -->
+		<!-- <groupId>org.codehaus.gmaven</groupId> -->
+		<!-- <artifactId>groovy-maven-plugin</artifactId> -->
+		<!-- <executions> -->
+		<!-- set absolute base path from super pom -->
+		<!-- <execution> -->
+		<!-- <id>find-basepath</id> -->
+		<!-- <phase>validate</phase> -->
+		<!-- <goals> -->
+		<!-- <goal>execute</goal> -->
+		<!-- </goals> -->
+		<!-- <configuration> -->
+		<!-- <source> -->
+		<!-- <![CDATA[ -->
+		<!-- import java.io.File; -->
+		<!-- log.info('## define projects super pom absolute path through basepath_marker') -->
+		<!-- String p = "basepath_marker"; -->
+		<!-- File f = null; -->
+		<!-- if( p != null ) { -->
+		<!-- def _max_child_poms = 0 -->
+		<!-- while( _max_child_poms++ < 5 ) { -->
+		<!-- f = new File( p ); -->
+		<!-- if( f.exists() ) { -->
+		<!-- break; -->
+		<!-- } -->
+		<!-- p = "../" + p; -->
+		<!-- } -->
+		<!-- } -->
+		<!-- if( f != null ) { -->
+		<!-- String basePath = f.getCanonicalPath(); -->
+		<!-- basePath = basePath.substring( 0, basePath.lastIndexOf( File.separator 
+			) ); -->
+		<!-- project.properties['base-path'] = basePath.replace( '\\' , '/'); -->
+		<!-- log.info(' - used base path = ' + project.properties['base-path'] 
+			); -->
+		<!-- } else { -->
+		<!-- log.error( 'Could not find basepath_marker marker file!' ); -->
+		<!-- System.stop( 0 ); -->
+		<!-- } -->
+		<!-- ]]> -->
+		<!-- </source> -->
+		<!-- </configuration> -->
+		<!-- </execution> -->
+		<!-- </executions> -->
+		<!-- </plugin> -->
 	</build>
-	
+
 	<profiles>
 
 		<profile>
@@ -144,9 +204,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 
-
 			<build>
-
 				<pluginManagement>
 					<plugins>
 						<plugin>
@@ -187,23 +245,11 @@
 										<name>RETRY_COUNT_PROPERTY_KEY</name>
 										<value>2</value>
 									</property>
-									<property>
-										<name>allure.issues.tracker.pattern</name>
-										<value>https://rally1.rallydev.com/#/search?keywords=%s</value>
-										<!-- value>https://jira.paypal.com/jira/browse/%s</value -->
-									</property>
 								</systemProperties>
 								<skipTests>${skipTests}</skipTests>
 								<testFailureIgnore>${testFailureIgnore}</testFailureIgnore>
 								<!-- <workingDirectory>target/</workingDirectory> -->
 							</configuration>
-							<dependencies>
-								<dependency>
-									<groupId>org.aspectj</groupId>
-									<artifactId>aspectjweaver</artifactId>
-									<version>1.8.5</version>
-								</dependency>
-							</dependencies>
 						</plugin>
 
 						<plugin>
@@ -272,7 +318,7 @@
 							<artifactId>maven-deploy-plugin</artifactId>
 							<version>2.8.1</version>
 							<configuration>
-								<altDeploymentRepository>internal.repo::default::file://${project.basedir}/../MavenNexus/releases</altDeploymentRepository>
+								<altDeploymentRepository>internal.repo::default::${ghnexus.dir}releases</altDeploymentRepository>
 								<!-- <outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory> -->
 							</configuration>
 						</plugin>
@@ -311,7 +357,6 @@
 										<version>2.6</version>
 									</plugin>
 								</reportPlugins>
-
 
 								<plugin>
 									<groupId>org.apache.maven.plugins</groupId>
@@ -383,7 +428,9 @@
 											<version>2.13</version>
 											<configuration>
 												<skip>true</skip>
-												<!-- Specifying configuration here will take effect on the execution of "mvn checkstyle:checkstyle", but will not take effect on the execution of "mvn site" -->
+												<!-- Specifying configuration here will take effect on the execution 
+													of "mvn checkstyle:checkstyle", but will not take effect on the execution 
+													of "mvn site" -->
 												<configLocation>${basedir}/config/checkstyle.xml</configLocation>
 												<failOnViolation>false</failOnViolation>
 												<failsOnError>false</failsOnError>
@@ -487,29 +534,6 @@
 						</plugin>
 					</plugins>
 				</pluginManagement>
-
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>wagon-maven-plugin</artifactId>
-						<version>1.0-beta-3</version>
-						<executions>
-							<execution>
-								<id>upload-jar-to-folder</id>
-								<phase>deploy</phase>
-								<goals>
-									<goal>upload</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<fromDir>file://${project.build.directory}</fromDir>
-							<includes>*.jar</includes>
-							<url>file://${project.basedir}/../MavenNexus/</url>
-							<toDir>repository</toDir>
-						</configuration>
-					</plugin>
-				</plugins>
 			</build>
 
 			<reporting>
@@ -519,7 +543,9 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-checkstyle-plugin</artifactId>
 						<version>2.13</version>
-						<!-- Specifying configuration here will take effect on the execution of "mvn checkstyle:checkstyle", but will not take effect on the execution of "mvn site" -->
+						<!-- Specifying configuration here will take effect on the execution 
+							of "mvn checkstyle:checkstyle", but will not take effect on the execution 
+							of "mvn site" -->
 						<configuration>
 							<configLocation>${project.basedir}/config/checkstyle.xml</configLocation>
 							<failOnViolation>false</failOnViolation>
@@ -544,6 +570,7 @@
 
 		</profile>
 	</profiles>
+	
 	<prerequisites>
 		<maven>2.2.0</maven>
 	</prerequisites>
