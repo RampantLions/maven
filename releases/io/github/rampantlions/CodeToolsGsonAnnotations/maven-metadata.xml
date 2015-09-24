@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>io.github.rampantlions</groupId>
-  <artifactId>SwingCommonDialogs</artifactId>
+  <artifactId>CodeToolsGsonAnnotations</artifactId>
   <versioning>
     <versions>
       <version>0.0.1-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20150923200421</lastUpdated>
+    <lastUpdated>20150924031437</lastUpdated>
   </versioning>
 </metadata>
