@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>io.github.rampantlions</groupId>
-  <artifactId>CodeToolsCore</artifactId>
+  <artifactId>CodeToolsSwaggerGenerators</artifactId>
   <versioning>
     <versions>
       <version>0.0.1-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20150924223234</lastUpdated>
+    <lastUpdated>20150924223221</lastUpdated>
   </versioning>
 </metadata>
