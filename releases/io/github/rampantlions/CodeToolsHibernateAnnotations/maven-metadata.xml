@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>io.github.rampantlions</groupId>
+  <artifactId>CodeToolsHibernateAnnotations</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20150924205839</lastUpdated>
+  </versioning>
+</metadata>

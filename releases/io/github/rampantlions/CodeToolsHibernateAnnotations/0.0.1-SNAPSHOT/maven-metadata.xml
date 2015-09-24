@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>io.github.rampantlions</groupId>
+  <artifactId>CodeToolsHibernateAnnotations</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20150924.205839</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20150924205839</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.0.1-20150924.205839-1</value>
+        <updated>20150924205839</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.1-20150924.205839-1</value>
+        <updated>20150924205839</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>tests</classifier>
+        <extension>jar</extension>
+        <value>0.0.1-20150924.205839-1</value>
+        <updated>20150924205839</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
